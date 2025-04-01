@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أدوات حماية الويب | عبدالله محمودي</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- إضافة مكتبة highlight.js للتلوين النصي -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/vs2015.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/javascript.min.js"></script>
     <style>
         :root {
             --primary-dark: #0a192f;
@@ -138,6 +142,24 @@
             font-family: 'Courier New', monospace;
             line-height: 1.5;
             position: relative;
+            direction: ltr; /* اتجاه النص داخل الكود من اليسار لليمين */
+            text-align: left;
+        }
+        
+        pre code {
+            direction: ltr; /* اتجاه النص داخل الكود من اليسار لليمين */
+            text-align: left;
+            display: block;
+            overflow-x: auto;
+            padding: 1em;
+        }
+        
+        /* تخصيص ألوان التعليقات العربية */
+        .hljs-comment,
+        .hljs-quote {
+            direction: rtl; /* اتجاه التعليقات من اليمين لليسار */
+            text-align: right;
+            unicode-bidi: embed;
         }
         
         pre::before {
@@ -283,7 +305,7 @@
     <div class="container">
         <div class="security-card">
             <h2>1. التحقق من صحة المدخلات (Input Validation)</h2>
-            <pre><code>// التحقق من البريد الإلكتروني باستخدام Regex متقدم
+            <pre><code class="language-javascript">// التحقق من البريد الإلكتروني باستخدام Regex متقدم
 function validateEmail(email) {
     const re = /^(([^&lt;&gt;()\[\]\\.,;:\s@"]+(\.[^&lt;&gt;()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -315,7 +337,7 @@ function validateNumber(input) {
 
         <div class="security-card">
             <h2>2. الحماية من CSRF (OWASP A8)</h2>
-            <pre><code>// إنشاء وتخزين رمز CSRF آمن
+            <pre><code class="language-javascript">// إنشاء وتخزين رمز CSRF آمن
 const crypto = require('crypto');
 
 const generateCSRFToken = () => {
@@ -354,7 +376,7 @@ axios.interceptors.request.use(config => {
 
         <div class="security-card">
             <h2>3. التحقق بخطوتين (2FA) (OWASP A2)</h2>
-            <pre><code>// استخدام مكتبة speakeasy لإنشاء رمز OTP
+            <pre><code class="language-javascript">// استخدام مكتبة speakeasy لإنشاء رمز OTP
 const speakeasy = require('speakeasy');
 
 // إنشاء سر سري (Secret) للمستخدم
@@ -401,7 +423,7 @@ const send2FACode = async (email, code) => {
 
         <div class="security-card">
             <h2>4. التشفير الآمن لكلمات المرور (OWASP A7)</h2>
-            <pre><code>const bcrypt = require('bcrypt');
+            <pre><code class="language-javascript">const bcrypt = require('bcrypt');
 const saltRounds = 12; // زيادة عدد الجولات للأمان الأعلى
 
 // تشفير كلمة المرور مع معالجة الأخطاء
@@ -445,7 +467,7 @@ const passwordStrengthMiddleware = (req, res, next) => {
 
         <div class="security-card">
             <h2>5. التحكم في الوصول (Rate Limiting) (OWASP A5)</h2>
-            <pre><code>const rateLimit = require('express-rate-limit');
+            <pre><code class="language-javascript">const rateLimit = require('express-rate-limit');
 const RedisStore = require('rate-limit-redis');
 
 // تحديد 5 محاولات تسجيل دخول كل 15 دقيقة
@@ -489,7 +511,7 @@ app.use('/api/', apiLimiter);</code></pre>
 
         <div class="security-card">
             <h2>6. حماية رؤوس HTTP (OWASP A6)</h2>
-            <pre><code>const helmet = require('helmet');
+            <pre><code class="language-javascript">const helmet = require('helmet');
 
 // إعداد Helmet لحماية رؤوس HTTP
 app.use(helmet());
@@ -531,7 +553,7 @@ app.use((req, res, next) => {
 
         <div class="security-card">
             <h2>7. حماية ضد هجمات SQL Injection (OWASP A1)</h2>
-            <pre><code>// استخدام استعلامات معلمة (Parameterized Queries) مع MySQL
+            <pre><code class="language-javascript">// استخدام استعلامات معلمة (Parameterized Queries) مع MySQL
 const mysql = require('mysql2/promise');
 
 async function getUserSafe(username) {
@@ -588,7 +610,7 @@ async function findUserSafely(username) {
             <h2>إجراءات أمان إضافية حسب OWASP</h2>
             
             <h3>8. إدارة الجلسات الآمنة (OWASP A2)</h3>
-            <pre><code>const session = require('express-session');
+            <pre><code class="language-javascript">const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 
 // إعداد جلسات آمنة مع Redis
@@ -635,7 +657,7 @@ app.use((req, res, next) => {
             </div>
 
             <h3>9. تسجيل الأحداث الأمنية (OWASP A9)</h3>
-            <pre><code>const { createLogger, transports, format } = require('winston');
+            <pre><code class="language-javascript">const { createLogger, transports, format } = require('winston');
 const { combine, timestamp, json, errors } = format;
 
 // إعداد نظام تسجيل الأحداث الأمنية
@@ -694,7 +716,7 @@ app.use((req, res, next) => {
             </div>
 
             <h3>10. حماية واجهات API (OWASP API Security)</h3>
-            <pre><code>const express = require('express');
+            <pre><code class="language-javascript">const express = require('express');
 const apiRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
@@ -782,8 +804,15 @@ apiRouter.use((req, res, next) => {
     </div>
 
     <script>
+        // تهيئة highlight.js لتلوين الأكواد
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
         function copyCode(button) {
-            const codeBlock = button.previousElementSibling;
+            const codeBlock = button.previousElementSibling.querySelector('code');
             const range = document.createRange();
             range.selectNode(codeBlock);
             window.getSelection().removeAllRanges();
