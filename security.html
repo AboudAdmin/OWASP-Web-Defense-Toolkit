@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أدوات حماية الويب | عبدالله محمودي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #0a192f;
+            --primary-blue: #1a365d;
+            --secondary-blue: #2c5282;
+            --accent-blue: #4299e1;
+            --light-blue: #ebf8ff;
+            --dark-gray: #1e293b;
+            --medium-gray: #334155;
+            --light-gray: #cbd5e1;
+            --white: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            right: -50px;
+            height: 100px;
+            background: var(--accent-blue);
+            transform: rotate(-2deg);
+            opacity: 0.1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+        
+        .security-card {
+            background: linear-gradient(145deg, var(--dark-gray) 0%, var(--primary-blue) 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 
+                        0 0 0 1px rgba(66, 153, 225, 0.2);
+            border-left: 5px solid var(--accent-blue);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        
+        .security-card:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 
+                        0 0 0 1px rgba(66, 153, 225, 0.4);
+        }
+        
+        .security-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue) 0%, transparent 100%);
+            border-radius: 12px 12px 0 0;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--white);
+            font-weight: 700;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1.5rem;
+            color: var(--accent-blue);
+            position: relative;
+            padding-right: 1rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: -8px;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue) 0%, transparent 100%);
+            border-radius: 3px;
+        }
+        
+        h3 {
+            font-size: 1.6rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--light-blue);
+        }
+        
+        h4 {
+            font-size: 1.3rem;
+            margin: 1.2rem 0 0.8rem;
+            color: var(--light-gray);
+        }
+        
+        pre {
+            background: rgba(10, 25, 47, 0.7);
+            padding: 1.2rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid var(--secondary-blue);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+            font-family: 'Courier New', monospace;
+            line-height: 1.5;
+            position: relative;
+        }
+        
+        pre::before {
+            content: 'كود';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent-blue);
+            color: var(--white);
+            padding: 0.2rem 0.8rem;
+            font-size: 0.8rem;
+            border-radius: 0 0 8px 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+            color: var(--accent-blue);
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--secondary-blue) 100%);
+            color: var(--white);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 0.8rem;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--accent-blue) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .explanation {
+            background: rgba(26, 54, 93, 0.4);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-right: 3px solid var(--accent-blue);
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            margin-top: 4rem;
+            position: relative;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            height: 100px;
+            background: var(--accent-blue);
+            transform: rotate(2deg);
+            opacity: 0.1;
+        }
+        
+        ul, ol {
+            padding-right: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        li::before {
+            content: '•';
+            color: var(--accent-blue);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-right: 0.5em;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--accent-blue);
+            color: var(--white);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .owasp-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px dashed var(--accent-blue);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .security-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>أدوات حماية تطبيقات الويب</h1>
+        <p>حلول أمان متكاملة وفق معايير OWASP لتطبيقات الويب الحديثة</p>
+    </div>
+
+    <div class="container">
+        <div class="security-card">
+            <h2>1. التحقق من صحة المدخلات (Input Validation)</h2>
+            <pre><code>// التحقق من البريد الإلكتروني باستخدام Regex متقدم
+function validateEmail(email) {
+    const re = /^(([^&lt;&gt;()\[\]\\.,;:\s@"]+(\.[^&lt;&gt;()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+// التحقق من المدخلات ضد هجمات XSS
+function sanitizeInput(input) {
+    return input.replace(/&lt;script[^&gt;]*&gt;([\s\S]*?)&lt;\/script&gt;/gi, '')
+               .replace(/&lt;[^&gt;]*&gt;/g, '')
+               .replace(/&lt;style[^&gt;]*&gt;([\s\S]*?)&lt;\/style&gt;/gi, '');
+}
+
+// التحقق من المدخلات الرقمية
+function validateNumber(input) {
+    return !isNaN(input) && Number.isFinite(Number(input));
+}</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h3>الشرح:</h3>
+                <p>التحقق من صحة المدخلات هو خط الدفاع الأول ضد هجمات OWASP Top 10 مثل:</p>
+                <ul>
+                    <li>هجمات حقن SQL (SQL Injection)</li>
+                    <li>هجمات XSS (Cross-Site Scripting)</li>
+                    <li>هجمات حقن الأوامر (Command Injection)</li>
+                </ul>
+                <p>يجب تطبيق التحقق على جانب الخادم (Server-side) بالإضافة إلى جانب العميل (Client-side).</p>
+            </div>
+        </div>
+
+        <div class="security-card">
+            <h2>2. الحماية من CSRF (OWASP A8)</h2>
+            <pre><code>// إنشاء وتخزين رمز CSRF آمن
+const crypto = require('crypto');
+
+const generateCSRFToken = () => {
+    return crypto.randomBytes(32).toString('hex') + '-' + Date.now();
+};
+
+// Middleware للتحقق من CSRF Token
+const verifyCSRFToken = (req, res, next) => {
+    const token = req.headers['x-csrf-token'] || req.body.csrfToken;
+    if (!token || token !== req.session.csrfToken) {
+        return res.status(403).json({ error: 'رمز CSRF غير صالح' });
+    }
+    next();
+};
+
+// إضافة CSRF token إلى الطلبات في React/Axios
+axios.interceptors.request.use(config => {
+    const token = localStorage.getItem('csrfToken');
+    if (token && ['post', 'put', 'patch', 'delete'].includes(config.method.toLowerCase())) {
+        config.headers['X-CSRF-Token'] = token;
+    }
+    return config;
+});</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h3>الشرح:</h3>
+                <p>الحماية من هجمات CSRF (Cross-Site Request Forgery) المذكورة في OWASP A8:</p>
+                <ul>
+                    <li>إنشاء رمز فريد لكل جلسة مستخدم مع إضافة الطابع الزمني</li>
+                    <li>تخزين الرمز في جلسة المستخدم (Session)</li>
+                    <li>إرفاق الرمز في رأس الطلبات أو كمعامل في النموذج</li>
+                    <li>التحقق من الرمز على الخادم لكل طلب يغير الحالة (POST, PUT, DELETE, PATCH)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="security-card">
+            <h2>3. التحقق بخطوتين (2FA) (OWASP A2)</h2>
+            <pre><code>// استخدام مكتبة speakeasy لإنشاء رمز OTP
+const speakeasy = require('speakeasy');
+
+// إنشاء سر سري (Secret) للمستخدم
+const generate2FASecret = () => {
+    return speakeasy.generateSecret({
+        length: 20,
+        name: 'تطبيق الويب الخاص بك',
+        issuer: 'شركتك'
+    });
+};
+
+// التحقق من رمز OTP
+const verify2FACode = (secret, token) => {
+    return speakeasy.totp.verify({
+        secret: secret,
+        encoding: 'base32',
+        token: token,
+        window: 1 // تسمح بتأخير ±30 ثانية
+    });
+};
+
+// إرسال الرمز عبر البريد الإلكتروني (مثال باستخدام nodemailer)
+const send2FACode = async (email, code) => {
+    const transporter = nodemailer.createTransport({ /* إعدادات SMTP */ });
+    await transporter.sendMail({
+        from: 'no-reply@yourdomain.com',
+        to: email,
+        subject: 'رمز التحقق بخطوتين',
+        text: `رمز التحقق الخاص بك هو: ${code}`
+    });
+};</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h3>الشرح:</h3>
+                <p>نظام التحقق بخطوتين يحمي من هجمات OWASP A2 (تخويل معيب):</p>
+                <ul>
+                    <li>إنشاء سر سري (Secret) فريد لكل مستخدم</li>
+                    <li>إنشاء رموز OTP (One-Time Password) صالحة لفترة زمنية محددة</li>
+                    <li>إرسال الرمز عبر قنوات متعددة (البريد الإلكتروني، SMS، تطبيق المصادقة)</li>
+                    <li>التحقق من الرمز مع السماح بهامش زمني صغير (±30 ثانية)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="security-card">
+            <h2>4. التشفير الآمن لكلمات المرور (OWASP A7)</h2>
+            <pre><code>const bcrypt = require('bcrypt');
+const saltRounds = 12; // زيادة عدد الجولات للأمان الأعلى
+
+// تشفير كلمة المرور مع معالجة الأخطاء
+async function hashPassword(password) {
+    if (!password || password.length < 8) {
+        throw new Error('كلمة المرور يجب أن تكون 8 أحرف على الأقل');
+    }
+    return await bcrypt.hash(password, saltRounds);
+}
+
+// مقارنة كلمة المرور المشفرة
+async function comparePassword(password, hashedPassword) {
+    if (!password || !hashedPassword) return false;
+    return await bcrypt.compare(password, hashedPassword);
+}
+
+// Middleware للتحقق من قوة كلمة المرور
+const passwordStrengthMiddleware = (req, res, next) => {
+    const { password } = req.body;
+    const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+    
+    if (!strongRegex.test(password)) {
+        return res.status(400).json({
+            error: 'كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل، حروف كبيرة وصغيرة، أرقام ورموز خاصة'
+        });
+    }
+    next();
+};</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h3>الشرح:</h3>
+                <p>حماية كلمات المرور وفقًا لمعايير OWASP A7 (تشفير غير آمن):</p>
+                <ul>
+                    <li>استخدام خوارزمية bcrypt القوية مع عدد جولات كافٍ (12 جولة)</li>
+                    <li>التحقق من قوة كلمة المرور قبل التشفير</li>
+                    <li>التأكد من عدم تخزين كلمات المرور كنص صريح (Plain Text)</li>
+                    <li>استخدام "ملح" (Salt) فريد لكل كلمة مرور</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="security-card">
+            <h2>5. التحكم في الوصول (Rate Limiting) (OWASP A5)</h2>
+            <pre><code>const rateLimit = require('express-rate-limit');
+const RedisStore = require('rate-limit-redis');
+
+// تحديد 5 محاولات تسجيل دخول كل 15 دقيقة
+const loginLimiter = rateLimit({
+    store: new RedisStore({
+        expiry: 15 * 60, // 15 دقيقة بالثواني
+        prefix: 'rate_limit:'
+    }),
+    windowMs: 15 * 60 * 1000, // 15 دقيقة
+    max: 5, // 5 محاولات
+    message: 'تم تجاوز عدد المحاولات المسموح بها، يرجى المحاولة بعد 15 دقيقة',
+    handler: (req, res) => {
+        res.status(429).json({
+            error: 'تم تجاوز الحد المسموح',
+            retryAfter: '15 دقيقة'
+        });
+    }
+});
+
+// تحديد 100 طلب في الدقيقة للواجهات العامة
+const apiLimiter = rateLimit({
+    windowMs: 60 * 1000, // 1 دقيقة
+    max: 100,
+    message: 'تم تجاوز الحد المسموح للطلبات'
+});
+
+app.use('/login', loginLimiter);
+app.use('/api/', apiLimiter);</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h3>الشرح:</h3>
+                <p>التحكم في معدل الطلبات يحمي من هجمات OWASP A5 (الوصول غير المقيد):</p>
+                <ul>
+                    <li>منع هجمات القوة الغاشمة (Brute Force) على صفحات التسجيل</li>
+                    <li>حماية واجهات API من الاستخدام المفرط</li>
+                    <li>استخدام Redis لتخزين العدادات في بيئات متعددة الخوادم</li>
+                    <li>إرسال رؤوس HTTP مثل X-RateLimit-Limit و X-RateLimit-Remaining</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="security-card">
+            <h2>6. حماية رؤوس HTTP (OWASP A6)</h2>
+            <pre><code>const helmet = require('helmet');
+
+// إعداد Helmet لحماية رؤوس HTTP
+app.use(helmet());
+
+// إعدادات إضافية لـ Helmet
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", 'trusted.cdn.com'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+        imgSrc: ["'self'", 'data:', 'cdn.example.com'],
+        fontSrc: ["'self'", 'fonts.gstatic.com'],
+        connectSrc: ["'self'", 'api.example.com'],
+        frameAncestors: ["'none'"],
+        formAction: ["'self'"]
+    }
+}));
+
+// منع تخزين التخزين المؤقت للصفحات الحساسة
+app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    next();
+});</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h3>الشرح:</h3>
+                <p>حماية رؤوس HTTP وفقًا لمعايير OWASP A6 (تأمين غير كافٍ):</p>
+                <ul>
+                    <li>استخدام Helmet لتأمين رؤوس HTTP الافتراضية</li>
+                    <li>تطبيق سياسة أمان المحتوى (CSP) لمنع هجمات XSS</li>
+                    <li>منع تضمين الموقع في iframe لمنع هجمات Clickjacking</li>
+                    <li>تعطيل تخزين التخزين المؤقت للصفحات الحساسة</li>
+                    <li>تنفيذ HSTS (HTTP Strict Transport Security)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="security-card">
+            <h2>7. حماية ضد هجمات SQL Injection (OWASP A1)</h2>
+            <pre><code>// استخدام استعلامات معلمة (Parameterized Queries) مع MySQL
+const mysql = require('mysql2/promise');
+
+async function getUserSafe(username) {
+    const connection = await mysql.createConnection({
+        host: 'localhost',
+        user: 'db_user',
+        database: 'app_db',
+        password: 'secure_password'
+    });
+    
+    // استخدام placeholders لمنع SQL Injection
+    const [rows] = await connection.execute(
+        'SELECT * FROM users WHERE username = ?',
+        [username]
+    );
+    
+    return rows[0];
+}
+
+// استخدام ORM مثل Sequelize مع الاستعلامات الآمنة
+const { Sequelize, Model, DataTypes } = require('sequelize');
+const sequelize = new Sequelize(/* إعدادات الاتصال */);
+
+class User extends Model {}
+User.init({
+    username: DataTypes.STRING,
+    password: DataTypes.STRING
+}, { sequelize, modelName: 'user' });
+
+async function findUserSafely(username) {
+    return await User.findOne({
+        where: {
+            username: {
+                [Sequelize.Op.eq]: username
+            }
+        }
+    });
+}</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h3>الشرح:</h3>
+                <p>الحماية من هجمات حقن SQL (OWASP A1):</p>
+                <ul>
+                    <li>استخدام استعلامات معلمة (Parameterized Queries) دائمًا</li>
+                    <li>تجنب تركيب استعلامات SQL يدويًا من مدخلات المستخدم</li>
+                    <li>استخدام ORMs مثل Sequelize أو TypeORM التي توفر حماية مدمجة</li>
+                    <li>تنفيذ مبدأ أقل صلاحية (Least Privilege) لحسابات قاعدة البيانات</li>
+                    <li>إعدادات قاعدة بيانات آمنة مثل تعطيل الاستعلامات المتعددة (Multiple Statements)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="owasp-section">
+            <h2>إجراءات أمان إضافية حسب OWASP</h2>
+            
+            <h3>8. إدارة الجلسات الآمنة (OWASP A2)</h3>
+            <pre><code>const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+
+// إعداد جلسات آمنة مع Redis
+app.use(session({
+    store: new RedisStore({
+        host: 'localhost',
+        port: 6379,
+        ttl: 24 * 60 * 60 // 24 ساعة
+    }),
+    secret: 'complex_secret_key_here',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 24 * 60 * 60 * 1000 // 24 ساعة
+    },
+    name: '__Secure-sessionId', // استخدام بادئة __Secure للكوكيز الآمنة
+    rolling: true // تجديد مدة الجلسة مع كل طلب
+}));
+
+// Middleware لتجديد معرف الجلسة بعد المصادقة
+app.use((req, res, next) => {
+    if (req.session.regenerate && req.session.user) {
+        req.session.regenerate(err => {
+            if (err) return next(err);
+            next();
+        });
+    } else {
+        next();
+    }
+});</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h4>الشرح:</h4>
+                <ul>
+                    <li>استخدام خادم Redis لتخزين الجلسات بشكل مركزي</li>
+                    <li>تعيين خصائص أمان الكوكيز (HttpOnly, Secure, SameSite)</li>
+                    <li>تجديد معرف الجلسة بعد المصادقة الناجحة</li>
+                    <li>استخدام سر سري (Secret) معقد وقوي</li>
+                    <li>تعطيل حفظ الجلسات غير المهيأة (Uninitialized)</li>
+                </ul>
+            </div>
+
+            <h3>9. تسجيل الأحداث الأمنية (OWASP A9)</h3>
+            <pre><code>const { createLogger, transports, format } = require('winston');
+const { combine, timestamp, json, errors } = format;
+
+// إعداد نظام تسجيل الأحداث الأمنية
+const securityLogger = createLogger({
+    level: 'info',
+    format: combine(
+        timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        errors({ stack: true }),
+        json()
+    ),
+    transports: [
+        new transports.File({ 
+            filename: 'logs/security.log',
+            level: 'warn',
+            maxsize: 5 * 1024 * 1024, // 5MB
+            maxFiles: 5
+        }),
+        new transports.Console({
+            format: format.combine(
+                format.colorize(),
+                format.simple()
+            )
+        })
+    ]
+});
+
+// Middleware لتسجيل محاولات الوصول غير الناجحة
+app.use((req, res, next) => {
+    const originalEnd = res.end;
+    res.end = function(chunk, encoding) {
+        if (res.statusCode >= 400) {
+            securityLogger.warn({
+                message: 'طلب غير ناجح',
+                status: res.statusCode,
+                method: req.method,
+                path: req.path,
+                ip: req.ip,
+                userAgent: req.get('User-Agent'),
+                time: new Date().toISOString()
+            });
+        }
+        originalEnd.call(res, chunk, encoding);
+    };
+    next();
+});</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h4>الشرح:</h4>
+                <ul>
+                    <li>تسجيل جميع الأحداث الأمنية الهامة في ملف منفصل</li>
+                    <li>تسجيل محاولات الوصول الفاشلة والأنشطة المشبوهة</li>
+                    <li>تخزين معلومات كافية للتحقيق في الحوادث الأمنية</li>
+                    <li>تدوير ملفات السجلات لمنع امتلاء مساحة التخزين</li>
+                    <li>تنسيق السجلات بشكل يسهل تحليله (JSON)</li>
+                </ul>
+            </div>
+
+            <h3>10. حماية واجهات API (OWASP API Security)</h3>
+            <pre><code>const express = require('express');
+const apiRouter = express.Router();
+const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
+
+// Middleware لمصادقة واجهات API باستخدام JWT
+const authenticateJWT = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    
+    if (authHeader) {
+        const token = authHeader.split(' ')[1];
+        
+        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+            
+            req.user = user;
+            next();
+        });
+    } else {
+        res.sendStatus(401);
+    }
+};
+
+// تحديد معدل الطلبات لواجهات API
+const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: 'Too many requests from this IP, please try again later'
+});
+
+// تطبيق الحماية على واجهات API
+apiRouter.use(apiLimiter);
+apiRouter.use(express.json({ limit: '10kb' })); // تحديد حجم الطلب
+
+apiRouter.get('/protected', authenticateJWT, (req, res) => {
+    res.json({ message: 'This is a protected endpoint', user: req.user });
+});
+
+apiRouter.post('/login', (req, res) => {
+    // التحقق من بيانات الاعتماد
+    const { username, password } = req.body;
+    
+    if (authenticateUser(username, password)) {
+        const token = jwt.sign(
+            { username, role: 'user' },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+        
+        res.json({ token });
+    } else {
+        res.status(401).json({ error: 'Invalid credentials' });
+    }
+});
+
+// إضافة تحقق من نوع المحتوى
+apiRouter.use((req, res, next) => {
+    if (req.method === 'POST' || req.method === 'PUT') {
+        const contentType = req.headers['content-type'];
+        if (!contentType || !contentType.includes('application/json')) {
+            return res.status(415).json({ error: 'Unsupported Media Type' });
+        }
+    }
+    next();
+});</code></pre>
+            <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            <div class="explanation">
+                <h4>الشرح:</h4>
+                <ul>
+                    <li>استخدام JWT (JSON Web Tokens) لمصادقة واجهات API</li>
+                    <li>تطبيق تحديد معدل الطلبات (Rate Limiting) على واجهات API</li>
+                    <li>التحقق من نوع المحتوى (Content-Type) للطلبات</li>
+                    <li>تحديد حجم الطلب (Request Size Limit) لمنع هجمات DDoS</li>
+                    <li>استخدام صلاحيات محددة (Scoped Permissions) للرموز المميزة</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>تم تطوير هذا الموقع الالكتروني بواسطة عبدالله محمودي - خبير تطوير تطبيقات ويب وامن سيبراني</p>
+        <p>جميع الحلول الأمنية مبنية على معايير OWASP Top 10 2023</p>
+        <p>© 2025 جميع الحقوق محفوظة</p>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const range = document.createRange();
+            range.selectNode(codeBlock);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            
+            try {
+                document.execCommand('copy');
+                button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg> تم النسخ!';
+                
+                setTimeout(() => {
+                    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg> نسخ الكود';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy code: ', err);
+            }
+            
+            window.getSelection().removeAllRanges();
+        }
+    </script>
+</body>
+</html>
