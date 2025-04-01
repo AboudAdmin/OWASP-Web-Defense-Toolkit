@@ -10,6 +10,84 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/javascript.min.js"></script>
     <style>
+        /* Media Query للشاشات الصغيرة */
+@media (max-width: 768px) {
+    body {
+    font-size: 16px; /* حجم النص الافتراضي */
+}
+
+    .header {
+        padding: 2rem 1rem; /* تقليل الهوامش */
+    }
+
+    h1 {
+        font-size: 2rem; /* تقليل حجم العنوان */
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding: 0 10px; /* تقليل الحواف الجانبية */
+    }
+
+    .security-card {
+        padding: 1rem; /* تقليل الحشو الداخلي */
+        margin-bottom: 1.5rem; /* تقليل المسافة بين البطاقات */
+    }
+
+    pre {
+        font-size: 12px; /* تقليل حجم النص داخل الكود */
+        padding: 0.8rem; /* تقليل الحشو */
+    }
+
+    .copy-btn {
+        padding: 0.4rem 0.8rem; /* تقليل حجم الزر */
+        font-size: 12px;
+    }
+
+    .explanation {
+        padding: 1rem; /* تقليل الحشو الداخلي */
+    }
+
+    .footer {
+        padding: 2rem 1rem; /* تقليل الحشو الداخلي */
+    }
+}
+
+/* Media Query للشاشات الأصغر (مثل الهواتف الصغيرة) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem; /* تقليل حجم العنوان أكثر */
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    .security-card {
+        padding: 0.8rem; /* تقليل الحشو الداخلي أكثر */
+    }
+
+    pre {
+    overflow-x: auto; /* السماح بالتمرير الأفقي */
+    word-wrap: normal; /* منع كسر النص */
+}
+.copy-btn {
+    min-width: 100px; /* عرض الزر الأدنى */
+    text-align: center;
+}
+
+    .explanation {
+        padding: 0.8rem; /* تقليل الحشو الداخلي أكثر */
+    }
+
+    .footer {
+        padding: 1.5rem 0.5rem; /* تقليل الحشو الداخلي أكثر */
+    }
+}
+
         :root {
             --primary-dark: #0a192f;
             --primary-blue: #1a365d;
@@ -377,6 +455,7 @@ axios.interceptors.request.use(config => {
         <div class="security-card">
             <h2>3. التحقق بخطوتين (2FA) (OWASP A2)</h2>
             <pre><code class="language-javascript">// استخدام مكتبة speakeasy لإنشاء رمز OTP
+
 const speakeasy = require('speakeasy');
 
 // إنشاء سر سري (Secret) للمستخدم
